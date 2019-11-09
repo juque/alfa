@@ -18,14 +18,14 @@ gulp.task('js', function() {
 });
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['sass'], function() {
+gulp.task('serve', gulp.series(['sass'], function() {
 
     browserSync.init({
         server: "./src"  
     });
 
-    gulp.watch(['src/scss/*.scss'], ['sass']);
+    gulp.watch(['src/scss/*.scss'], gulp.parallel(['sass']));
     gulp.watch("src/*.html").on('change', browserSync.reload);
-});
+}));
 
-gulp.task('default', ['js','serve']);
+gulp.task('default', gulp.series(['js','serve']));
